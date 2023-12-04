@@ -3,6 +3,7 @@ pipeline {
   stages {
     stage('S1 6719053N') {
       steps {
+        //Assume release environment setup is done
         echo 'Stage1_6719053N: Release Environment Preparation Completed'
       }
     }
@@ -18,11 +19,13 @@ pipeline {
       parallel {
         stage('S3 6719053N API Test') {
           steps {
+            //Assume API tests done here
             echo 'Stage3_6719053N: API Test Completed'           
           }
         }
         stage('S3 6719053N Scan Test') {
           steps {
+            //Assume security scan tests done here
             echo 'Stage3_6719053N: Scan Test Completed'
           }
         }  
