@@ -2,9 +2,8 @@ pipeline {
   agent any
   stages {
     stage('S1 6719053N') {
-      //Assume release environment setup is done here
       steps {
-        echo 'Stage1_6719053N:Release Environment Preperation Completed'
+        echo 'Stage1_6719053N: Release Environment Preparation Completed'
       }
     }
     stage('S2 6719053N') {
@@ -17,33 +16,34 @@ pipeline {
     }
     stage('S3 6719053N') {
       parallel {
-        stage('S3 6719053N API Test'){
-          steps{
-            //Assume API activities done here
-            echo 'Stage3_6719053N:API Test Completed'           
+        stage('S3 6719053N API Test') {
+          steps {
+            echo 'Stage3_6719053N: API Test Completed'           
           }
         }
-        stage('S3 6719053N Scan Test'){
-          steps{
-            //Assume security scan test done here
-            echo 'Stage3_6719053N:Scan Test Completed'
+        stage('S3 6719053N Scan Test') {
+          steps {
+            echo 'Stage3_6719053N: Scan Test Completed'
           }
-        }
-        
+        }  
       }
     }
     stage('S4 6719053N') {
       steps {
-        input('6719053N, proceed to release the work to the next phase?', parameters: [choice(name: 'ACTION', choices: 'Proceed\nAbort', description: 'Choose an action')])
+        script {
+          input message: '6719053N, proceed to release the work to the next phase?', parameters: [choice(name: 'ACTION', choices: 'Proceed\nAbort', description: 'Choose an action')]
+        }
       }
     }
     stage('S5 6719053N') {
       steps {
-        if (params.ACTION == 'Proceed') {
-          echo 'Stage5_6719053N:Work Release - Proceed to Next Phase'
-        }
-        if (params.ACTION == 'Abort') {
-          echo 'Stage5_6719053N:Work Release - Stops'
+        script {
+          if (params.ACTION == 'Proceed') {
+            echo 'Stage5_6719053N: Work Release - Proceed to Next Phase'
+          }
+          if (params.ACTION == 'Abort') {
+            echo 'Stage5_6719053N: Work Release - Stops'
+          }
         }
       }
     }
